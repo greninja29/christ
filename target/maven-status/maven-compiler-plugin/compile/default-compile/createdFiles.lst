@@ -1,0 +1,5 @@
+com\tms\workshop\repository\UserRepository.class
+com\tms\workshop\service\UserService.class
+com\tms\workshop\model\User.class
+com\tms\workshop\WorkshopApplication.class
+com\tms\workshop\controller\UserController.class
