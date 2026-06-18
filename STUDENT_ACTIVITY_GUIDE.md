@@ -12,7 +12,68 @@
 ```bash
 git clone <repo-url>
 cd tms-git-workshop
-git log --oneline   # See the initial commit
+```
+
+### Pick your team branch:
+```bash
+# Team Alpha students:
+git checkout team-alpha
+
+# Team Beta students:
+git checkout team-beta
+```
+
+⚠️ **main is LOCKED — no one pushes to main directly!**
+
+```bash
+git log --oneline   # See the initial commits on your team branch
+```
+
+---
+
+## Activity 0: Basic Git Commands Practice (10 min)
+
+### Warm-up — learn the fundamentals in a scratch repo:
+
+```bash
+mkdir my-practice && cd my-practice && git init
+```
+
+1. **Create a file & check status:**
+   ```bash
+   echo "Hello Git" > hello.txt
+   git status              # hello.txt is UNTRACKED (red)
+   ```
+
+2. **Stage it:**
+   ```bash
+   git add hello.txt
+   git status              # hello.txt is STAGED (green)
+   ```
+
+3. **Commit it:**
+   ```bash
+   git commit -m "Add hello.txt"
+   git log --oneline       # Your first commit!
+   ```
+
+4. **Make a change & see the diff:**
+   ```bash
+   echo "Second line" >> hello.txt
+   git diff                # Shows working dir vs last commit
+   ```
+
+5. **Stage & commit again:**
+   ```bash
+   git add hello.txt
+   git diff --staged       # Shows what's about to be committed
+   git commit -m "Add second line to hello.txt"
+   git log --oneline       # Two commits!
+   ```
+
+✅ **Done!** Now go back to the workshop repo:
+```bash
+cd ../tms-git-workshop
 ```
 
 ---
@@ -24,12 +85,17 @@ Add a **new endpoint** to search users by email.
 
 ### Steps:
 
-1. **Create a feature branch:**
+1. **Make sure you're on your team branch:**
    ```bash
-   git checkout -b feature/search-by-email
+   git checkout team-alpha   # or team-beta
    ```
 
-2. **Edit `UserController.java`** — Add this method after `getUserById`:
+2. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/your-name-search-email
+   ```
+
+3. **Edit `UserController.java`** — Add this method after `getUserById`:
    ```java
    @GetMapping("/search")
    public ResponseEntity<User> searchByEmail(@RequestParam String email) {
@@ -38,7 +104,7 @@ Add a **new endpoint** to search users by email.
    }
    ```
 
-3. **Edit `UserService.java`** — Add this method:
+4. **Edit `UserService.java`** — Add this method:
    ```java
    public User findByEmail(String email) {
        User user = userRepository.findByEmail(email);
@@ -49,29 +115,31 @@ Add a **new endpoint** to search users by email.
    }
    ```
 
-4. **Commit:**
+5. **Commit & push:**
    ```bash
    git add .
    git commit -m "feat: add search by email endpoint"
+   git push origin feature/your-name-search-email
    ```
 
-5. **⚠️ Now the instructor will update main!** Wait for the signal...
+6. **⚠️ Now the instructor will update your team branch!** Wait for the signal...
 
-6. **Try to merge main into your branch:**
+7. **Try to merge your team branch into your feature branch:**
    ```bash
    git fetch origin
-   git merge origin/main
+   git merge origin/team-alpha   # or origin/team-beta
    ```
 
-7. **💥 CONFLICT!** Open the conflicting files and resolve them:
+8. **💥 CONFLICT!** Open the conflicting files and resolve them:
    - Look for `<<<<<<<`, `=======`, `>>>>>>>` markers
    - Keep BOTH features (search by email AND search by department)
    - Remove the conflict markers
 
-8. **Complete the merge:**
+9. **Complete the merge:**
    ```bash
    git add .
    git commit -m "merge: resolve conflict with department search"
+   git push origin feature/your-name-search-email
    ```
 
 ✅ **Done!** You handled your first merge conflict!
@@ -81,19 +149,19 @@ Add a **new endpoint** to search users by email.
 ## Challenge 2: Rebase with Conflicts (25 min)
 
 ### Your Task:
-Add **input validation** to the User service, then rebase onto updated main.
+Add **input validation** to the User service, then rebase onto updated team branch.
 
 ### Steps:
 
-1. **Switch to main and pull latest:**
+1. **Switch to your team branch and pull latest:**
    ```bash
-   git checkout main
-   git pull origin main
+   git checkout team-alpha   # or team-beta
+   git pull origin team-alpha
    ```
 
 2. **Create a new branch:**
    ```bash
-   git checkout -b feature/add-validation
+   git checkout -b feature/your-name-validation
    ```
 
 3. **Make multiple small commits** (this is intentional — we'll clean them up later):
@@ -155,12 +223,12 @@ Add **input validation** to the User service, then rebase onto updated main.
    git commit -m "fix typo"
    ```
 
-4. **⚠️ Instructor updates main again!** Wait for signal...
+4. **⚠️ Instructor updates your team branch again!** Wait for signal...
 
-5. **Rebase onto main:**
+5. **Rebase onto team branch:**
    ```bash
    git fetch origin
-   git rebase origin/main
+   git rebase origin/team-alpha   # or origin/team-beta
    ```
 
 6. **💥 CONFLICTS during rebase!**
@@ -175,7 +243,7 @@ Add **input validation** to the User service, then rebase onto updated main.
 
    💡 **If you mess up:** `git rebase --abort` starts over!
 
-✅ **Done!** Notice how rebase replays YOUR commits one-by-one on top of main.
+✅ **Done!** Notice how rebase replays YOUR commits one-by-one on top of the team branch.
 
 ---
 
