@@ -1,1 +1,6 @@
 test
+<<<<<<< HEAD
+=======
+change 342552551
+
+>>>>>>> remotes/origin/team-beta8
