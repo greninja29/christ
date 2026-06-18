@@ -1,10 +1,11 @@
 package com.tms.workshop.service;
 
-import com.tms.workshop.model.User;
-import com.tms.workshop.repository.UserRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.tms.workshop.model.User;
+import com.tms.workshop.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -38,5 +39,13 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("User not found with email: " + email);
+        }
+        return user;
     }
 }
